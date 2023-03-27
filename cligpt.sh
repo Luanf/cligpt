@@ -38,7 +38,7 @@ cligpt() {
     echo "Output: $COMMAND"
   elif [ -n "$COMMAND" ]; then
     echo "-> $COMMAND"
-    read -q "REPLY?Do you want to run this command? (y/n)"
+    read -p "Do you want to run this command? (y/n) " REPLY
     if [[ "$REPLY" =~ ^[Yy]$ ]]; then
       echo
       eval "$COMMAND"
