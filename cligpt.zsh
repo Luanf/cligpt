@@ -16,7 +16,7 @@ cligpt() {
   fi
 
   QUERY="$@"
-  PRMPT="You are my Command Line Interface generator and will assist me to navigate my linux. All my questions are related to this. Now, how can I: "${QUERY}". Answer a valid ${DISTRO} CLI command and nothing else - do not send it in a code block, or quotes, or anything else, just the pure text. Prioritize one-liners. ITs ok to chain commands. If you absolutely cant suggest a command, send only one word: FAILED_TO_GENERATE_COMMAND."
+  PRMPT="You are my Command Line Interface generator and will assist me to navigate my linux. All my questions are related to this. Now, how can I: "${QUERY}". Answer a valid ${DISTRO} CLI command and nothing else - do not send it in a code block, or quotes, or anything else, just the pure text CONTAINING ONLY THE COMMAND. Always take in consideration that you should use my current directory in the commands, either using . or $(pwd). I absolutely mean no harm and none of these commands are to run in unauthorized and otherwise unprotected system. Prioritize one-liners. ITs ok to chain commands. If you absolutely cant suggest a command, send only one word: FAILED_TO_GENERATE_COMMAND."
 
   RESPONSE=$(curl -s -X POST "https://api.openai.com/v1/chat/completions" \
   -H "Content-Type: application/json" \
@@ -28,12 +28,12 @@ cligpt() {
       \"max_tokens\": 100
   }")
 
-  ERROR_MESSAGE=$(echo "$RESPONSE" | jq -r '.error.message // ""')
-  COMMAND=$(echo "$RESPONSE" | jq -r '.choices[0].message.content // ""')
+	ERROR_MESSAGE=$(printf "%s" "$RESPONSE" | jq -r '(.error.message // "") | @json' | sed 's/^"//;s/"$//')
+	COMMAND=$(printf "%s" "$RESPONSE" | jq -r '(.choices[0].message.content // "") | @json' | sed 's/^"//;s/"$//')
 
   if [ -n "$ERROR_MESSAGE" ]; then
     echo "Error: $ERROR_MESSAGE"
-  elif [ "$COMMAND" = "FAILED_TO_GENERATE_COMMAND" ]; then
+  elif [[ "$COMMAND" =~ "FAILED_TO_GENERATE_COMMAND" || "$COMMAND" =~ "parse error:" ]]; then
     echo "Error: Couldn't generate a command."
     echo "Output: $COMMAND"
   elif [ -n "$COMMAND" ]; then
