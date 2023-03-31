@@ -38,12 +38,17 @@ cligpt() {
     echo "Output: $COMMAND"
   elif [ -n "$COMMAND" ]; then
     echo "-> $COMMAND"
-    read -q "REPLY?Do you want to run this command? (y/n)"
-    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+    if [ -n "$BASH_VERSION" ]; then
+      read -r -p "Do you want to run this command? (y/n)" 
+    elif [ -n "$ZSH_VERSION" ]; then
+      read -q "REPLY?Do you want to run this command? (y/n)"
       echo
+    else
+      echo "This script is not running in Bash or Zsh - ignore in case you really are"
+    fi
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
       eval "$COMMAND"
     else
-      echo
       echo "Command not executed."
     fi
   else

@@ -13,15 +13,23 @@ chmod +x install.sh
 ./install.sh
 ```
 
-This will copy CliGPT into your ```.zshrc``` file. Modify it accordingly if you are not a zsh user.
+This will copy CliGPT into your default shell folder e.g: ```${HOME}/.zsh/cligpt.sh```
 
-Make sure you have the OPENAI_API_KEY environment variable set.
+If you want to specify the shell, use flag ```--shell``` e.g: ```./install.sh --shell bash```.
+
+If a previous version is already installed it will be reinstalled.
+
+I might tweak the prompt in this repository from time to time. 
+
+You might want to tweak it too and suggest changes through a Pull Request.
+
+**Make sure you have the OPENAI_API_KEY environment variable set.**
 
 You can do so by running:
 
 ```export OPENAI_API_KEY=<your key here>```
 
-Or by adding the above command to your .zshrc, or whatever other environment variable setup you prefer. 
+Or by adding the above command to your shell .rc file, or whatever other environment variable setup you prefer. 
 
 # Run
 
