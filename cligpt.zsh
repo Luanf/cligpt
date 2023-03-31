@@ -39,9 +39,9 @@ cligpt() {
   elif [ -n "$COMMAND" ]; then
     echo "-> $COMMAND"
     if [ -n "$BASH_VERSION" ]; then
-      read -r -p "Do you want to run this command? (y/n) "
+      read -r -p "REPLY?Do you want to run this command? (y/n) " 
     elif [ -n "$ZSH_VERSION" ]; then
-      read -r -q "Do you want to run this command? (y/n) "
+      read -r -q "REPLY?Do you want to run this command? (y/n) "
     else
       echo "This script is not running in Bash or Zsh"
     fi
