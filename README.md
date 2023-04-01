@@ -13,13 +13,11 @@ chmod +x install.sh
 ./install.sh
 ```
 
-This will copy CliGPT into your default shell folder e.g: ```${HOME}/.zsh/cligpt.sh```
+This will create a symbolic link for CliGPT in the ${HOME}/.local/bin directory, making it accessible system-wide.
 
-If you want to specify the shell, use flag ```--shell``` e.g: ```./install.sh --shell bash```.
+If a previous version is already installed, the symbolic link will be updated.
 
-If a previous version is already installed it will be reinstalled.
-
-I might tweak the prompt in this repository from time to time. 
+I might tweak the prompt in this repository from time to time.
 
 You might want to tweak it too and suggest changes through a Pull Request.
 
