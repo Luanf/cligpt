@@ -13,15 +13,21 @@ chmod +x install.sh
 ./install.sh
 ```
 
-This will copy CliGPT into your ```.zshrc``` file. Modify it accordingly if you are not a zsh user.
+This will create a symbolic link for CliGPT in the ${HOME}/.local/bin directory, making it accessible system-wide.
 
-Make sure you have the OPENAI_API_KEY environment variable set.
+If a previous version is already installed, the symbolic link will be updated.
+
+I might tweak the prompt in this repository from time to time.
+
+You might want to tweak it too and suggest changes through a Pull Request.
+
+**Make sure you have the OPENAI_API_KEY environment variable set.**
 
 You can do so by running:
 
 ```export OPENAI_API_KEY=<your key here>```
 
-Or by adding the above command to your .zshrc, or whatever other environment variable setup you prefer. 
+Or by adding the above command to your shell .rc file, or whatever other environment variable setup you prefer. 
 
 # Run
 

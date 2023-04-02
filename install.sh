@@ -1,12 +1,14 @@
 #!/bin/bash
 
-if [[ -n "$BASH_VERSION" ]]; then
-  cat cligpt.zsh >> ~/.bashrc
-elif [ -n "$ZSH_VERSION" ]; then
-  cat cligpt.zsh >> ~/.zshrc
-else
-  echo "Install unsuccessful. Shell is not supported."
-  return 1
-fi
+INSTALLER=$(realpath "$0")
+CLIGPT=$(dirname "$INSTALLER")/cligpt
+chmod +x $CLIGPT 
 
-echo "Installed. Reload your shell to use cligpt, and make sure you have the OPENAI_API_KEY environment variable set."
+CLIGPT_TARGET_DIR=$HOME/.local/bin
+mkdir -p $CLIGPT_TARGET_DIR && \
+ln -sf $CLIGPT $CLIGPT_TARGET_DIR && \
+{
+  echo "CliGPT installed successfully at $CLIGPT_TARGET_DIR/cligpt. You can now run it by typing cligpt in your terminal."
+  echo "If the command is not found, you may need to add $CLIGPT_TARGET_DIR to your PATH environment variable."
+  echo "Also, make sure that you have the env variable OPENAI_API_KEY set to use the application."
+}
