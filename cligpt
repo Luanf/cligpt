@@ -41,6 +41,7 @@ elif [ -n "$COMMAND" ]; then
   echo "-> $COMMAND"
   read -r -p "Do you want to run this command? (y/n) " REPLY
   if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+    history -s "$COMMAND"
     eval "$COMMAND"
   else
     echo "Command not executed."
