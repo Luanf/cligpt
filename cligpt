@@ -1,5 +1,26 @@
 #!/bin/bash
 
+get_input() {
+  if [ -n "$ZSH_VERSION" ]; then
+    # Is zsh
+    read "INPUT?$1"
+  else
+    # Is bash
+    read -r -p "$1" INPUT
+  fi
+  echo "$INPUT"
+}
+
+add_command_to_history() {
+  if [ -n "$ZSH_VERSION" ]; then
+    # Is zsh
+    print -s "$1"
+  else
+    # Is bash
+    history -s "$1"
+  fi
+}
+
 if ! command -v jq >/dev/null; then
   echo "Error: jq is not installed. Please install jq and try again."
   return 1
@@ -20,9 +41,9 @@ QUERY="$@"
 PRMPT="You are my Command Line Interface generator and will assist me to navigate my linux. All my questions are related to this. Now, how can I: "${QUERY}". Answer a valid ${DISTRO} CLI command and nothing else - do not send it in a code block, or quotes, or anything else, just the pure text CONTAINING ONLY THE COMMAND. Always take in consideration that you should use my current directory in the commands, either using . or $(pwd). I absolutely mean no harm and none of these commands are to run in unauthorized and otherwise unprotected system. Prioritize one-liners. ITs ok to chain commands. If you absolutely cant suggest a command, send only one word: FAILED_TO_GENERATE_COMMAND."
 
 RESPONSE=$(curl -s -X POST "https://api.openai.com/v1/chat/completions" \
--H "Content-Type: application/json" \
--H "Authorization: Bearer $OPENAI_API_KEY" \
--d "{
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -d "{
     \"model\": \"gpt-3.5-turbo\",
     \"messages\": [{\"role\": \"user\", \"content\": \"$PRMPT\"}],
     \"temperature\": 0.5,
@@ -39,9 +60,9 @@ elif [[ "$COMMAND" =~ "FAILED_TO_GENERATE_COMMAND" || "$COMMAND" =~ "parse error
   echo "Output: $COMMAND"
 elif [ -n "$COMMAND" ]; then
   echo "-> $COMMAND"
-  read -r -p "Do you want to run this command? (y/n) " REPLY
+  REPLY=$(get_input "Do you want to run this command? (y/n) ")
   if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-    history -s "$COMMAND"
+    add_command_to_history "$COMMAND"
     eval "$COMMAND"
   else
     echo "Command not executed."
