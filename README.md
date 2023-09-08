@@ -21,11 +21,16 @@ I might tweak the prompt in this repository from time to time.
 
 You might want to tweak it too and suggest changes through a Pull Request.
 
-**Make sure you have the OPENAI_API_KEY environment variable set.**
+**Essential Configuration: OPENAI_API_KEY and cligpt Alias**
+
+To ensure proper functionality, including the ability to retrieve the last run command from your shell history, you must set the OPENAI_API_KEY environment variable and create an alias for running cligpt.
 
 You can do so by running:
 
-```export OPENAI_API_KEY=<your key here>```
+```bash
+export OPENAI_API_KEY="<your key here>"
+alias cligpt="source $HOME/.local/bin/cligpt"
+```
 
 Or by adding the above command to your shell .rc file, or whatever other environment variable setup you prefer. 
 
