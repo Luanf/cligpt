@@ -2,10 +2,6 @@
 
 Streamline your terminal experience by generating Linux commands from natural language queries, reducing the need to leave the terminal for manual web searches.
 
-# Demo
-
-![](https://s2.gifyu.com/images/ezgif.com-crop1.gif)
-
 # Setup
 
 ```
